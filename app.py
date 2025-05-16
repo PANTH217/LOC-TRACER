@@ -4,17 +4,19 @@ import pandas as pd
 from datetime import datetime
 import os
 
-st.set_page_config(page_title="Location Logger", layout="centered")
-st.title("📍 Location Logger App")
+st.set_page_config(page_title="📍 Location Logger", layout="centered")
+st.title("📍 Automatic Location Logger")
 
+# 🔁 Automatically request location on page load
 location = streamlit_geolocation()
 
 if location:
-    st.success("Location access granted! ✅")
+    st.success("✅ Location access granted!")
     st.write(f"**Latitude:** {location['latitude']}")
     st.write(f"**Longitude:** {location['longitude']}")
     st.write(f"**Accuracy:** {location['accuracy']} meters")
 
+    # Create a new record with timestamp
     record = {
         "timestamp": datetime.now().isoformat(),
         "latitude": location['latitude'],
@@ -31,12 +33,13 @@ if location:
     else:
         df = pd.DataFrame([record])
 
-    # Save updated data
+    # Save to CSV
     df.to_csv(csv_file, index=False)
-    st.success("📄 Location saved successfully!")
 
-    with st.expander("📊 Show All Saved Locations"):
+    st.success("📄 Location saved!")
+
+    with st.expander("📊 View All Saved Locations"):
         st.dataframe(df)
 
 else:
-    st.warning("⚠️ Please allow location access in your browser.")
+    st.info("🔐 Waiting for location access. Please allow it in your browser.")
